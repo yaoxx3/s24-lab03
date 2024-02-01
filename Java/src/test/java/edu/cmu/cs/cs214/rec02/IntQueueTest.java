@@ -38,10 +38,19 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
-    //    mQueue = new ArrayIntQueue();
+        // mQueue = new LinkedIntQueue();
+        // change the testList to exceed initial size to test ensureCapacity()
+        mQueue = new ArrayIntQueue();
 
-        testList = new ArrayList<>(List.of(1, 2, 3));
+        testList = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
+    }
+
+    @Test
+    public void testClear() {
+        // Added specification-based unit test
+        mQueue.enqueue(testList.get(0));
+        mQueue.clear();
+        assertTrue(mQueue.isEmpty());
     }
 
     @Test
@@ -52,20 +61,19 @@ public class IntQueueTest {
 
     @Test
     public void testNotEmpty() {
-        // TODO: write your own unit test
-        fail("Test not implemented");
+        mQueue.enqueue(testList.get(0));
+        assertFalse(mQueue.isEmpty());
     }
 
     @Test
     public void testPeekEmptyQueue() {
-        // TODO: write your own unit test
-        fail("Test not implemented");
+        assertNull(mQueue.peek());
     }
 
     @Test
     public void testPeekNoEmptyQueue() {
-        // TODO: write your own unit test
-        fail("Test not implemented");
+        mQueue.enqueue(testList.get(0));
+        assertEquals(mQueue.peek(), testList.get(0));
     }
 
     @Test
@@ -79,9 +87,32 @@ public class IntQueueTest {
     }
 
     @Test
-    public void testDequeue() {
-        // TODO: write your own unit test
-        fail("Test not implemented");
+    public void testEnqueueWithHeadGreaterThanZero() {
+        // Structural Testing for line coverage
+        // Change the head by enquene() and dequene()
+        mQueue.enqueue(testList.get(0));
+        mQueue.enqueue(testList.get(1));
+        mQueue.dequeue();
+        mQueue.dequeue();
+        for (int i = 0; i < testList.size(); i++) {
+            mQueue.enqueue(testList.get(i));
+            assertEquals(testList.get(0), mQueue.peek());
+            assertEquals(i + 1, mQueue.size());
+        }
+    }
+
+    @Test
+    public void testDequeueEmptyQuene() {
+        // Added specification-based unit test
+        assertNull(mQueue.dequeue());
+    }
+
+    @Test
+    public void testDequeueNotEmptyQuene() {
+        // Added specification-based unit test
+        mQueue.enqueue(testList.get(0));
+        assertEquals(mQueue.dequeue(), testList.get(0));
+        assertEquals(0, mQueue.size());
     }
 
     @Test
